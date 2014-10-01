@@ -56,6 +56,12 @@ should work.
       (if-url-doesnt-match #"[/0-9]+" wrap-with-logger)
        wrap-with-other-stuff))
 
+;; Arbitrary conditions are possible. The test-fn is passed the
+;; current Ring request as its argument.
+(def conditional-logging-app
+  (-> handler
+      (ring.middleware.conditional/if test-fn wrap-with-logger)
+       wrap-with-other-stuff))
 
 ```
 
