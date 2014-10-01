@@ -1,4 +1,4 @@
-(defproject ring.middleware.conditional "0.1.1-SNAPSHOT"
+(defproject ring.middleware.conditional "0.1.0"
   :description "Adds arbitrary conditions to the Ring middleware stack"
   :url "http://github.com/pjlegato/ring.middleware.conditional"
   :license {:name "Eclipse Public License"
