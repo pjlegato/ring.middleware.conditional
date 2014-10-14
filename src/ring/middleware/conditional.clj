@@ -29,7 +29,7 @@
   URI in the request starts with the provided literal string."
   [f str middleware]
   (ring.middleware.conditional/if f
-    (fn [request] (.startsWith (:uri request) str))
+    (fn [request] (.startsWith ^String (:uri request) str))
     middleware))
 
 
@@ -38,7 +38,7 @@
   URI in the request does NOT start with the provided literal string."
   [f str middleware]
   (ring.middleware.conditional/if f
-    (fn [request] (not (.startsWith (:uri request) str)))
+    (fn [request] (not (.startsWith ^String (:uri request) str)))
     middleware))
 
 
