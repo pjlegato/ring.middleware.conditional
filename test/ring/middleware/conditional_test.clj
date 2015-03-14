@@ -28,24 +28,37 @@
       (is (= "bar=123"   (stack (request :get "bar"        {:bar 123}))))
       (is (= "replaced!" (stack (request :get "do-replace" {:bar 123})))))))
 
-
 (deftest test-if-url-starts-with
   (testing "The if-url-starts-with convenience method works as advertised."
-    (let [stack (-> echo-handler
-                    (if-url-starts-with "/do-replace/" wrap-with-replacer))]
-      (is (= "bar=123"   (stack (request :get "/foo/bar"        {:bar 123}))))
-      (is (= "bar=123"   (stack (request :get "/baz/do-replace" {:bar 123}))))
-      (is (= "replaced!" (stack (request :get "/do-replace/baz" {:bar 123})))))))
-
+    (testing "single path"
+      (let [stack (-> echo-handler
+                      (if-url-starts-with "/do-replace/" wrap-with-replacer))]
+        (is (= "bar=123"   (stack (request :get "/foo/bar"        {:bar 123}))))
+        (is (= "bar=123"   (stack (request :get "/baz/do-replace" {:bar 123}))))
+        (is (= "replaced!" (stack (request :get "/do-replace/baz" {:bar 123}))))))
+    (testing "multiple paths"
+      (let [stack (-> echo-handler
+                     (if-url-starts-with ["/do-replace1/" "/do-replace2/"]
+                                         wrap-with-replacer))]
+        (is (= "bar=123"   (stack (request :get "/foo/bar"             {:bar 123}))))
+        (is (= "replaced!" (stack (request :get "/do-replace1/baz" {:bar 123}))))
+        (is (= "replaced!" (stack (request :get "/do-replace2/bar" {:bar 123}))))))))
 
 (deftest test-if-url-doesnt-start-with
   (testing "The if-url-doesnt-start-with convenience method works as advertised."
-    (let [stack (-> echo-handler
-                    (if-url-doesnt-start-with "/dont-replace/" wrap-with-replacer))]
-      (is (= "replaced!" (stack (request :get "/foo/bar"          {:bar 123}))))
-      (is (= "replaced!" (stack (request :get "/baz/do-replace"   {:bar 123}))))
-      (is (= "bar=123"   (stack (request :get "/dont-replace/baz" {:bar 123})))))))
-
+    (testing "single path"
+      (let [stack (-> echo-handler
+                      (if-url-doesnt-start-with "/dont-replace/" wrap-with-replacer))]
+        (is (= "replaced!" (stack (request :get "/foo/bar"            {:bar 123}))))
+        (is (= "replaced!" (stack (request :get "/dont-replace"       {:bar 123}))))
+        (is (= "bar=123"   (stack (request :get "/dont-replace/baz"   {:bar 123}))))))
+    (testing "multiple paths"
+      (let [stack (-> echo-handler
+                     (if-url-doesnt-start-with ["/dont-replace1/" "/dont-replace2/"]
+                                               wrap-with-replacer))]
+        (is (= "replaced!" (stack (request :get "/foo/bar"           {:bar 123}))))
+        (is (= "bar=123"   (stack (request :get "/dont-replace1/baz" {:bar 123}))))
+        (is (= "bar=123"   (stack (request :get "/dont-replace2/bar" {:bar 123}))))))))
 
 (deftest test-if-url-matches
   (testing "The if-url-matches convenience method works as advertised."
