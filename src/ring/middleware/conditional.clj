@@ -18,10 +18,11 @@
     will always run wrap-with-stuff's handler and base-handler, but will
     skip wrap-with-logging when (some-fn? request) is true."
   [f pred middleware]
-  (fn [request]
-    (if (pred request)
-      ((middleware f) request)
-      (f request))))
+  (let [wrapped (middleware f)]
+    (fn [request]
+      (if (pred request)
+        (wrapped request)
+        (f request)))))
 
 (defn if-url-starts-with
   "Convenience method that invokes the given Ring middleware if the
