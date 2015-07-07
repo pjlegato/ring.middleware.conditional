@@ -9,7 +9,7 @@ convenience methods are welcome!
 
 ## Usage
 
-Add `[ring.middleware.conditional "0.1.0"]` to your `project.clj`. `refer` to the functions you want, e.g:
+Add `[ring.middleware.conditional "0.2.0"]` to your `project.clj`. `refer` to the functions you want, e.g:
 
 ```clojure
   (:require [ring.middleware.conditional :as c :refer  [if-url-starts-with
@@ -68,7 +68,7 @@ should work.
 
 ## License
 
-Copyright © 2014 Paul Legato.
+Copyright © 2014-2015 Paul Legato.
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
