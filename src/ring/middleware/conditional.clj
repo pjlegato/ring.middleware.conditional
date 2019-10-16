@@ -1,6 +1,7 @@
 (ns ring.middleware.conditional
   "Conditional Ring middleware, which allows conditional execution
-   of Ring middleware paths. Includes convenience methods for common cases.")
+   of Ring middleware paths. Includes convenience methods for common cases."
+  (:refer-clojure :exclude [if]))
 
 
 (defn if
