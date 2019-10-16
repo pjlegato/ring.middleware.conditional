@@ -3,6 +3,6 @@
   :url "http://github.com/pjlegato/ring.middleware.conditional"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [ring "1.3.1"]]
-  :profiles {:dev {:dependencies [[ring-mock "0.1.5"]]}})
+  :dependencies [[org.clojure/clojure "1.10.1"]
+                 [ring/ring-core "1.7.1"]]
+  :profiles {:dev {:dependencies [[ring/ring-mock "0.4.0"]]}})
